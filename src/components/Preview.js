@@ -61,29 +61,29 @@ const Preview = (props) => {
         </button>
       </header>
       <section className="results">
-        {records.map((record, index) => (
-          <div
-            key={index}
-            className="object-preview"
-            onClick={(event) => {
-              event.preventDefault();
-              // prevent the default
-              setFeaturedResult(record);
-              // set the featured result to be this record, using setFeaturedResult
-            }}
-          >
-            {
-              record.primaryimageurl ? (
-                <img src={record.primaryimageurl} alt={record.description} />
-              ) : null
-              // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing
-            }
-            {
-              record.title ? <h3>{record.title}</h3> : <h3>MISSING INFO</h3>
-              // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
-            }
-          </div>
-        ))}
+        {records &&
+          records.map((record, index) => (
+            <div
+              key={index}
+              className="object-preview"
+              onClick={(event) => {
+                event.preventDefault();
+                // prevent the default
+                setFeaturedResult(record);
+
+                // set the featured result to be this record, using setFeaturedResult
+              }}
+            >
+              {
+                record.primaryimageurl && (
+                  <img src={record.primaryimageurl} alt={record.description} />
+                )
+
+                // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing
+              }
+              <h3>{record.title || "MISSING INFO"}</h3>
+            </div>
+          ))}
         {/* Here we should map over the records, and render something like this for each one:
           
           <div  

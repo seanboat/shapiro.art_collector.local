@@ -73,14 +73,20 @@ const Search = (props) => {
       id="search"
       onSubmit={async (event) => {
         event.preventDefault();
-        setIsLoading();
+        setIsLoading(true);
         try {
-          await fetchQueryResults({ century, classification, queryString });
-          setSearchResults({ century, classification, queryString });
+          const results = await fetchQueryResults({
+            century,
+            classification,
+            queryString,
+          });
+          setSearchResults(results);
         } catch (ex) {
           console.error(ex);
-          !setIsLoading();
+        } finally {
+          setIsLoading(false);
         }
+
         // write code here
       }}
     >
@@ -118,7 +124,7 @@ const Search = (props) => {
           <option value="any">Any</option>
           {/* map over the classificationList, return an <option /> */}
           {classificationList.map((option, index) => (
-            <option key={index}>{option}</option>
+            <option key={index}>{option.name}</option>
           ))}
         </select>
       </fieldset>
@@ -139,7 +145,7 @@ const Search = (props) => {
           <option value="any">Any</option>
           {/* map over the centuryList, return an <option /> */}
           {centuryList.map((option, index) => (
-            <option key={index}>{option}</option>
+            <option key={index}>{option.name}</option>
           ))}
         </select>
       </fieldset>

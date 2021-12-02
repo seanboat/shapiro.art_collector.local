@@ -38,7 +38,7 @@ const App = () => {
         setSearchResults={setSearchResults}
       />
       {/* <Loading /> is static, but should only render when isLoading is true */}
-      <Loading /> {/* use a ternary and render null if isLoading is false */}
+      {<Loading /> /* use a ternary and render null if isLoading is false */}
     </div>
   );
 };
