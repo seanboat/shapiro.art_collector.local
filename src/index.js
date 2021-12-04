@@ -5,9 +5,9 @@ import ReactDOM from "react-dom";
 import { Feature, Loading, Preview, Search, Title } from "./components";
 
 const App = () => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [featuredResult, setFeaturedResult] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [searchResults, setSearchResults] = useState({ info: {}, records: [] });
+  const [featuredResult, setFeaturedResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * We are at the App level component, which is top-most. Any state which needs to be shared between immediate children should
@@ -38,7 +38,11 @@ const App = () => {
         setSearchResults={setSearchResults}
       />
       {/* <Loading /> is static, but should only render when isLoading is true */}
-      {<Loading /> /* use a ternary and render null if isLoading is false */}
+      {
+        isLoading && (
+          <Loading />
+        ) /* use a ternary and render null if isLoading is false */
+      }
     </div>
   );
 };

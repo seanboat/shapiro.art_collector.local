@@ -37,24 +37,29 @@ const Searchable = (props) => {
   const { searchTerm, searchValue, setIsLoading, setSearchResults } = props;
   return (
     <span className="content">
-      <a href="#" onClick={async (event) => {
-        event.preventDefault();
-        setIsLoading(true);
-        try {
-          const result = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
-          setSearchResults(result)
-        } catch (ex) {
-          console.error(ex) 
-        } finally {
-          setIsLoading(false)
-        }}}>
-        
+      <a
+        href="#"
+        onClick={async (event) => {
+          event.preventDefault();
+          setIsLoading(true);
+          try {
+            const result = await fetchQueryResultsFromTermAndValue(
+              searchTerm,
+              searchValue
+            );
+            setSearchResults(result);
+          } catch (ex) {
+            console.error(ex);
+          } finally {
+            setIsLoading(false);
+          }
+        }}
+      >
+        {searchValue}
       </a>
     </span>
-
-    );
-      
-
+  );
+};
 /**
  * We need a new component called Feature which looks like this when no featuredResult is passed in as a prop:
  *
@@ -91,24 +96,66 @@ const Searchable = (props) => {
  */
 
 const Feature = (props) => {
-  const {featuredResult} = props;
+  const { featuredResult, setIsLoading, setSearchResults } = props;
+  const { title, dated, culture, technique, medium, images } =
+    featuredResult || {};
+
   return (
     <main id="feature">
-      <div className="object-feature">
-        <header>
-          <h3>OBJECT TITLE</h3>
-          <h4>WHEN IT IS DATED</h4>
-        </header>
-        <section className="facts">
-          <span className="title">FACT NAME</span>
-          <span className="content">FACT VALUE</span>
-          <span className="title">NEXT FACT NAME</span>
-          <span className="content">NEXT FACT VALUE</span>
-        </section>
-        <section className="photos">
-          <img src="IMAGE_URL" alt="SOMETHING_WORTHWHILE" />
-        </section>
-      </div>
+      {featuredResult && (
+        <div className="object-feature">
+          <header>
+            <h3>{title}</h3>
+            <h4>{dated}</h4>
+          </header>
+          <section className="facts">
+            <span className="title">Culture</span>
+            <span className="content">
+              <Searchable
+                searchTerm={"culture"}
+                searchValue={culture}
+                setIsLoading={setIsLoading}
+                setSearchResults={setSearchResults}
+              />
+            </span>
+            {technique && (
+              <>
+                <span className="title">Technique</span>
+                <span className="content">
+                  <Searchable
+                    searchTerm={"technique"}
+                    searchValue={technique}
+                    setIsLoading={setIsLoading}
+                    setSearchResults={setSearchResults}
+                  />
+                </span>
+              </>
+            )}
+            {medium && (
+              <>
+                <span className="title">Medium</span>
+                <span className="content">
+                  <Searchable
+                    searchTerm={"medium"}
+                    searchValue={medium}
+                    setIsLoading={setIsLoading}
+                    setSearchResults={setSearchResults}
+                  />
+                </span>
+              </>
+            )}
+          </section>
+          <section className="photos">
+            {images.map((image) => (
+              <img
+                key={image.idsid}
+                src={image.baseimageurl}
+                alt={image.alttext}
+              />
+            ))}
+          </section>
+        </div>
+      )}
     </main>
   );
 };
