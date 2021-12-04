@@ -1,11 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 // Don't touch this import
-import {
-  fetchQueryResultsFromTermAndValue,
-  BASE_URL,
-  fetchQueryResultsFromURL,
-} from "../api";
+import { fetchQueryResultsFromTermAndValue } from "../api";
 
 /**
  * We need a new component called Searchable which:
