@@ -93,7 +93,7 @@ const Searchable = (props) => {
 
 const Feature = (props) => {
   const { featuredResult, setIsLoading, setSearchResults } = props;
-  const { title, dated, culture, technique, medium, images } =
+  const { title, dated, culture, technique, medium, period, images } =
     featuredResult || {};
 
   return (
@@ -140,16 +140,33 @@ const Feature = (props) => {
                 </span>
               </>
             )}
+            {period && (
+              <>
+                <span className="title">Period</span>
+                <span className="content">
+                  <Searchable
+                    searchTerm={"period"}
+                    searchValue={period}
+                    setIsLoading={setIsLoading}
+                    setSearchResults={setSearchResults}
+                  />
+                </span>
+              </>
+            )}
           </section>
-          <section className="photos">
-            {images.map((image) => (
-              <img
-                key={image.idsid}
-                src={image.baseimageurl}
-                alt={image.alttext}
-              />
-            ))}
-          </section>
+          {images && (
+            <>
+              <section className="photos">
+                {images.map((image) => (
+                  <img
+                    key={image.idsid}
+                    src={image.baseimageurl}
+                    alt={image.alttext}
+                  />
+                ))}
+              </section>
+            </>
+          )}
         </div>
       )}
     </main>
